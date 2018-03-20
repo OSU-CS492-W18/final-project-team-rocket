@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class PokeApiUtils {
     public static final String EXTRA_SEARCH_RESULT = "PokeApiUtils.SearchResult";
 
-    final static String GITHUB_SEARCH_BASE_URL = "https://pokeapi.co/api/v2/pokedex/kanto";
+    final static String GITHUB_SEARCH_BASE_URL = "https://pokeapi.co/api/v2/pokedex/kanto/";
     final static String GITHUB_SEARCH_QUERY_PARAM = "q";
     final static String GITHUB_SEARCH_SORT_PARAM = "sort";
 
@@ -68,16 +68,16 @@ public class PokeApiUtils {
     public static ArrayList<SearchResult> parseSearchResultsJSON(String searchResultsJSON) {
         try {
             JSONObject searchResultsObj = new JSONObject(searchResultsJSON);
-            JSONArray searchResultsItems = searchResultsObj.getJSONArray("items");
+            JSONArray searchResultsItems = searchResultsObj.getJSONArray("pokemon_entries");
 
             ArrayList<SearchResult> searchResultsList = new ArrayList<SearchResult>();
             for (int i = 0; i < searchResultsItems.length(); i++) {
                 SearchResult result = new SearchResult();
                 JSONObject resultItem = searchResultsItems.getJSONObject(i);
-                result.fullName = resultItem.getString("full_name");
-                result.description = resultItem.getString("description");
-                result.htmlURL = resultItem.getString("html_url");
-                result.stars = resultItem.getInt("stargazers_count");
+                result.fullName = resultItem.getJSONObject("pokemon_species").getString("name");
+//                result.description = resultItem.getString("description");
+//                result.htmlURL = resultItem.getString("html_url");
+//                result.stars = resultItem.getInt("stargazers_count");
                 searchResultsList.add(result);
             }
             return searchResultsList;

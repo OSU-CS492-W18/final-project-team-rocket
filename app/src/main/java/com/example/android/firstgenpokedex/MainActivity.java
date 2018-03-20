@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        doGitHubSearch("Nothing");
+
         getSupportLoaderManager().initLoader(GITHUB_SEARCH_LOADER_ID, null, this);
     }
 
