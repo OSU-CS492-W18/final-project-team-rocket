@@ -1,4 +1,4 @@
-package com.example.android.githubsearchwithprefs;
+package com.example.android.firstgenpokedex;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.android.githubsearchwithprefs.utils.GitHubUtils;
+import com.example.android.firstgenpokedex.utils.PokeApiUtils;
 
 public class SearchResultDetailActivity extends AppCompatActivity {
 
@@ -17,7 +17,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     private TextView mTVSearchResultStars;
     private TextView mTVSearchResultDescription;
 
-    private GitHubUtils.SearchResult mSearchResult;
+    private PokeApiUtils.SearchResult mSearchResult;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +28,8 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         mTVSearchResultDescription = (TextView)findViewById(R.id.tv_search_result_description);
 
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(GitHubUtils.EXTRA_SEARCH_RESULT)) {
-            mSearchResult = (GitHubUtils.SearchResult) intent.getSerializableExtra(GitHubUtils.EXTRA_SEARCH_RESULT);
+        if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
+            mSearchResult = (PokeApiUtils.SearchResult) intent.getSerializableExtra(PokeApiUtils.EXTRA_SEARCH_RESULT);
             mTVSearchResultName.setText(mSearchResult.fullName);
             mTVSearchResultStars.setText(String.valueOf(mSearchResult.stars));
             mTVSearchResultDescription.setText(mSearchResult.description);

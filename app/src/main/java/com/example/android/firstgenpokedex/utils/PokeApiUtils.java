@@ -1,4 +1,4 @@
-package com.example.android.githubsearchwithprefs.utils;
+package com.example.android.firstgenpokedex.utils;
 
 import android.net.Uri;
 import android.text.TextUtils;
@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,10 +14,10 @@ import java.util.ArrayList;
  * Created by hessro on 1/30/18.
  */
 
-public class GitHubUtils {
-    public static final String EXTRA_SEARCH_RESULT = "GitHubUtils.SearchResult";
+public class PokeApiUtils {
+    public static final String EXTRA_SEARCH_RESULT = "PokeApiUtils.SearchResult";
 
-    final static String GITHUB_SEARCH_BASE_URL = "https://api.github.com/search/repositories";
+    final static String GITHUB_SEARCH_BASE_URL = "https://pokeapi.co/api/v2/pokedex/kanto";
     final static String GITHUB_SEARCH_QUERY_PARAM = "q";
     final static String GITHUB_SEARCH_SORT_PARAM = "sort";
 
@@ -35,9 +34,9 @@ public class GitHubUtils {
 
         Uri.Builder builder = Uri.parse(GITHUB_SEARCH_BASE_URL).buildUpon();
 
-        if (!TextUtils.isEmpty(sort)) {
-                builder.appendQueryParameter(GITHUB_SEARCH_SORT_PARAM, sort);
-        }
+//        if (!TextUtils.isEmpty(sort)) {
+//                builder.appendQueryParameter(GITHUB_SEARCH_SORT_PARAM, sort);
+//        }
 
         String queryValue = new String(searchQuery);
         if (!TextUtils.isEmpty(language)) {
@@ -61,7 +60,7 @@ public class GitHubUtils {
             queryValue += " in:" + TextUtils.join(",", searchInList);
         }
 
-        builder.appendQueryParameter(GITHUB_SEARCH_QUERY_PARAM, queryValue);
+        //builder.appendQueryParameter(GITHUB_SEARCH_QUERY_PARAM, queryValue);
 
         return builder.build().toString();
     }

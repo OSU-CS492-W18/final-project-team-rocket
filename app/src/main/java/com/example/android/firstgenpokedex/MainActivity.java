@@ -1,4 +1,4 @@
-package com.example.android.githubsearchwithprefs;
+package com.example.android.firstgenpokedex;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,12 +14,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.android.githubsearchwithprefs.utils.GitHubUtils;
+import com.example.android.firstgenpokedex.utils.PokeApiUtils;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
 
     private final static String TAG = MainActivity.class.getSimpleName();
 
-    private final static String SEARCH_URL_KEY = "githubSearchURL";
+    private final static String SEARCH_URL_KEY = "pokeapi";
 
     private final static int GITHUB_SEARCH_LOADER_ID = 0;
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         mGitHubSearchAdapter = new GitHubSearchAdapter(this);
         mSearchResultsRV.setAdapter(mGitHubSearchAdapter);
 
-        Button searchButton = (Button)findViewById(R.id.btn_search);
+        ImageButton searchButton = (ImageButton)findViewById(R.id.btn_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity
                 getString(R.string.pref_in_readme_key), true
         );
 
-        String githubSearchURL = GitHubUtils.buildGitHubSearchURL(searchQuery, sort, language,
+        String githubSearchURL = PokeApiUtils.buildGitHubSearchURL(searchQuery, sort, language,
                 user, searchInName, searchInDescription, searchInReadme);
         Bundle args = new Bundle();
         args.putString(SEARCH_URL_KEY, githubSearchURL);
@@ -126,9 +126,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSearchItemClick(GitHubUtils.SearchResult searchResult) {
+    public void onSearchItemClick(PokeApiUtils.SearchResult searchResult) {
         Intent detailedSearchResultIntent = new Intent(this, SearchResultDetailActivity.class);
-        detailedSearchResultIntent.putExtra(GitHubUtils.EXTRA_SEARCH_RESULT, searchResult);
+        detailedSearchResultIntent.putExtra(PokeApiUtils.EXTRA_SEARCH_RESULT, searchResult);
         startActivity(detailedSearchResultIntent);
     }
 
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity
         mLoadingProgressBar.setVisibility(View.INVISIBLE);
         Log.d(TAG, "got results from loader");
         if (data != null) {
-            ArrayList<GitHubUtils.SearchResult> searchResults = GitHubUtils.parseSearchResultsJSON(data);
+            ArrayList<PokeApiUtils.SearchResult> searchResults = PokeApiUtils.parseSearchResultsJSON(data);
             mGitHubSearchAdapter.updateSearchResults(searchResults);
             mLoadingErrorMessage.setVisibility(View.INVISIBLE);
             mSearchResultsRV.setVisibility(View.VISIBLE);

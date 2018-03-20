@@ -1,4 +1,4 @@
-package com.example.android.githubsearchwithprefs;
+package com.example.android.firstgenpokedex;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

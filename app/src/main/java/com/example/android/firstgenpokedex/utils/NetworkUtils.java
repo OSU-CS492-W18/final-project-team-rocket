@@ -1,4 +1,4 @@
-package com.example.android.githubsearchwithprefs.utils;
+package com.example.android.firstgenpokedex.utils;
 
 import java.io.IOException;
 
