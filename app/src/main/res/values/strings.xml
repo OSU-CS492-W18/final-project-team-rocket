@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GitHub Search with User Prefs</string>
+    <string name="app_name">Pokédex</string>
 
     <string name="loading_error_message">Failed to execute your search.  Check your internet connection.</string>
 
@@ -51,5 +51,14 @@
     <!-- Strings for user preference -->
     <string name="pref_user_key">pref_user</string>
     <string name="pref_user_title">GitHub user</string>
+
+    <!-- Strings for sort-by for Pokemon -->
+    <string name="pref_sortBy_key" translatable="false">pref_sort</string>
+    <string name="pref_sortBy_title">Sort Pokémon by</string>
+    <string name="pref_sort_entry_id">ID</string>
+    <string name="pref_sort_entry_name">Name</string>
+    <string name="pref_sort_entry_type">Type</string>
+    <string name="pref_sort_entry_evolution">Most-recently updated</string>
+
 
 </resources>
