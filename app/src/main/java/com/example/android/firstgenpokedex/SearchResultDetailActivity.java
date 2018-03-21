@@ -31,8 +31,8 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
             mSearchResult = (PokeApiUtils.SearchResult) intent.getSerializableExtra(PokeApiUtils.EXTRA_SEARCH_RESULT);
             mTVSearchResultName.setText(mSearchResult.fullName);
-            mTVSearchResultStars.setText(String.valueOf(mSearchResult.stars));
-            mTVSearchResultDescription.setText(mSearchResult.description);
+            //mTVSearchResultStars.setText(String.valueOf(mSearchResult.stars));
+            mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
         }
     }
 
@@ -46,36 +46,36 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_view_repo:
-                viewRepoOnWeb();
+                //viewRepoOnWeb();
                 return true;
             case R.id.action_share:
-                shareRepo();
+                //shareRepo();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void viewRepoOnWeb() {
-        if (mSearchResult != null) {
-            Uri githubRepoURL = Uri.parse(mSearchResult.htmlURL);
-            Intent webIntent = new Intent(Intent.ACTION_VIEW, githubRepoURL);
-            if (webIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(webIntent);
-            }
-        }
-    }
-
-    public void shareRepo() {
-        if (mSearchResult != null) {
-            String shareText = getString(R.string.share_text_prefix) + ": " +
-                  mSearchResult.fullName + ", " + mSearchResult.htmlURL;
-
-            ShareCompat.IntentBuilder.from(this)
-                    .setChooserTitle(R.string.share_chooser_title)
-                    .setType("text/plain")
-                    .setText(shareText)
-                    .startChooser();
-        }
-    }
+//    public void viewRepoOnWeb() {
+//        if (mSearchResult != null) {
+//            Uri githubRepoURL = Uri.parse(mSearchResult.htmlURL);
+//            Intent webIntent = new Intent(Intent.ACTION_VIEW, githubRepoURL);
+//            if (webIntent.resolveActivity(getPackageManager()) != null) {
+//                startActivity(webIntent);
+//            }
+//        }
+//    }
+//
+//    public void shareRepo() {
+//        if (mSearchResult != null) {
+//            String shareText = getString(R.string.share_text_prefix) + ": " +
+//                  mSearchResult.fullName + ", " + mSearchResult.htmlURL;
+//
+//            ShareCompat.IntentBuilder.from(this)
+//                    .setChooserTitle(R.string.share_chooser_title)
+//                    .setType("text/plain")
+//                    .setText(shareText)
+//                    .startChooser();
+//        }
+//    }
 }

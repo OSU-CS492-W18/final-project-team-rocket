@@ -7,7 +7,7 @@
         ></item>
 
     <item
-        android:title="WhoDat"
+        android:title="Who's That Pokemon?"
         android:icon="@drawable/temp_who_dat_pokemon"
         ></item>
 </menu>

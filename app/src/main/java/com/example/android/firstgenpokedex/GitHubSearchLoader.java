@@ -38,7 +38,7 @@ public class GitHubSearchLoader extends AsyncTaskLoader<String> {
     @Override
     public String loadInBackground() {
         if (mGitHubSearchURL != null) {
-            Log.d(TAG, "loading results from GitHub with URL: " + mGitHubSearchURL);
+            Log.d(TAG, "loading results from Pokeapi with URL: " + mGitHubSearchURL);
             String searchResults = null;
             try {
                 searchResults = NetworkUtils.doHTTPGet(mGitHubSearchURL);

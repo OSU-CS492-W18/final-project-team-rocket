@@ -55,18 +55,15 @@ public class MainActivity extends AppCompatActivity
         mGitHubSearchAdapter = new GitHubSearchAdapter(this);
         mSearchResultsRV.setAdapter(mGitHubSearchAdapter);
 
+        doGitHubSearch();
+
         ImageButton searchButton = (ImageButton)findViewById(R.id.btn_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String searchQuery = mSearchBoxET.getText().toString();
-                if (!TextUtils.isEmpty(searchQuery)) {
-                    doGitHubSearch(searchQuery);
-                }
+                doGitHubSearch();
             }
         });
-
-        doGitHubSearch("Nothing");
 
         getSupportLoaderManager().initLoader(GITHUB_SEARCH_LOADER_ID, null, this);
     }
@@ -90,7 +87,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void doGitHubSearch(String searchQuery) {
+    private void doGitHubSearch() {
+        String searchQuery = mSearchBoxET.getText().toString();
+
+//        if (!TextUtils.isEmpty(searchQuery)) {
+//            doGitHubSearch(searchQuery);
+//        }
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         String sort = sharedPreferences.getString(
@@ -148,6 +150,8 @@ public class MainActivity extends AppCompatActivity
         mLoadingProgressBar.setVisibility(View.INVISIBLE);
         Log.d(TAG, "got results from loader");
         if (data != null) {
+
+            Log.d(TAG, "What got sent to parseSearchResult was: " + data);
             ArrayList<PokeApiUtils.SearchResult> searchResults = PokeApiUtils.parseSearchResultsJSON(data);
             mGitHubSearchAdapter.updateSearchResults(searchResults);
             mLoadingErrorMessage.setVisibility(View.INVISIBLE);

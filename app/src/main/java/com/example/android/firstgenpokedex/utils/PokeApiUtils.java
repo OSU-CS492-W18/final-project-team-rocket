@@ -7,7 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -17,22 +19,22 @@ import java.util.ArrayList;
 public class PokeApiUtils {
     public static final String EXTRA_SEARCH_RESULT = "PokeApiUtils.SearchResult";
 
-    final static String GITHUB_SEARCH_BASE_URL = "https://pokeapi.co/api/v2/pokedex/kanto/";
+    final static String GITHUB_SEARCH_BASE_URL = "https://pokeapi.co/api/v2/";
+    final static String FIRST_GEN_KANTO = "pokedex/kanto/";
     final static String GITHUB_SEARCH_QUERY_PARAM = "q";
     final static String GITHUB_SEARCH_SORT_PARAM = "sort";
 
     public static class SearchResult implements Serializable {
         public String fullName;
-        public String description;
-        public String htmlURL;
-        public int stars;
+        public String pokemonURL;
+        public String ability1;
     }
 
     public static String buildGitHubSearchURL(String searchQuery, String sort, String language,
                                               String user, boolean searchInName, boolean searchInDescription,
                                               boolean searchInReadme) {
 
-        Uri.Builder builder = Uri.parse(GITHUB_SEARCH_BASE_URL).buildUpon();
+        Uri.Builder builder = Uri.parse(GITHUB_SEARCH_BASE_URL + "pokedex/kanto/").buildUpon();
 
 //        if (!TextUtils.isEmpty(sort)) {
 //                builder.appendQueryParameter(GITHUB_SEARCH_SORT_PARAM, sort);
@@ -75,6 +77,19 @@ public class PokeApiUtils {
                 SearchResult result = new SearchResult();
                 JSONObject resultItem = searchResultsItems.getJSONObject(i);
                 result.fullName = resultItem.getJSONObject("pokemon_species").getString("name");
+                result.pokemonURL = GITHUB_SEARCH_BASE_URL + "pokemon/" + result.fullName + "/";
+
+//                String addPokemon = NetworkUtils.doHTTPGet(result.pokemonURL);
+ //               JSONObject newPokemon = new JSONObject(addPokemon);
+ //               result.ability1 = newPokemon.getJSONObject("abilities").getJSONObject("0").getJSONObject("ability").getString("name");
+ //               result.pokemonURL = Uri.parse(GITHUB_SEARCH_BASE_URL + "/pokemon/" + result.fullName + "/").buildUpon();
+//                JSONObject newPokemon = new JSONObject(builder.build().toString());
+//                result.id = newPokemon.getInt("id");
+//                result.ability = newPokemon.getJSONObject("abilities").getJSONObject("0").getJSONObject("ability").getString("name");
+                //result.hAbility = newPokemon.getJSONObject("abilities").getJSONObject("1").getJSONObject("ability").getString("name");
+
+
+
 //                result.description = resultItem.getString("description");
 //                result.htmlURL = resultItem.getString("html_url");
 //                result.stars = resultItem.getInt("stargazers_count");

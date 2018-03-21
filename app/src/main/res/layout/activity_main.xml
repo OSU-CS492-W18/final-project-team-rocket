@@ -27,6 +27,8 @@
             android:textSize="24sp"
             android:hint="Search Pokedex..."
             android:layout_weight="2"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             />
     
         <ImageButton
@@ -68,12 +70,17 @@
         </FrameLayout>
         
     </LinearLayout>
-    
+
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/Bottom_Navigator"
         android:layout_gravity="bottom"
-        design:menu="@menu/bottom_nav"></android.support.design.widget.BottomNavigationView>
+        design:menu="@menu/bottom_nav"
+        android:background="?android:attr/windowBackground"
+        android:foreground="?attr/selectableItemBackground" />
+        <!--design:itemIconTint="@android:color/white"-->
+        <!--design:itemTextColor="@android:color/white"-->
+        <!--design:itemBackground="@color/colorPrimary"-->
     
 </android.support.design.widget.CoordinatorLayout>
