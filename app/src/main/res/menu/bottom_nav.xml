@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Pokedex"
+        android:title="Pokedéx"
         android:icon="@drawable/home_temp_pokedex"
         ></item>
 
     <item
-        android:title="Who's That Pokemon?"
+        android:title="Who's That Pokémon?"
         android:icon="@drawable/temp_who_dat_pokemon"
         ></item>
 </menu>
