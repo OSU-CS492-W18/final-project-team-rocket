@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.android.firstgenpokedex.SearchResultDetailActivity"
+    tools:context="com.example.android.firstgenpokedex.SearchResultDetailActivity">
 
     <TextView
         android:id="@+id/tv_search_result_name"
@@ -21,14 +21,6 @@
         android:orientation="horizontal"
         android:gravity="fill_horizontal"
         >
-
-        <TextView
-            android:id="@+id/tv_search_result_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="40sp"
-            android:padding="16dp"
-            android:textColor="#000"/>
 
         <ImageView
             android:id="@+id/action_battle_cry"

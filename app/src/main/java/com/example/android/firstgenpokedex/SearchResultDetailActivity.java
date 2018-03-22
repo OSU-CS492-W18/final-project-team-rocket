@@ -22,7 +22,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SearchResultDetailActivity extends AppCompatActivity  {
 import android.net.Uri;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -72,7 +71,6 @@ public class SearchResultDetailActivity extends AppCompatActivity {
 
         new PokeSearchTask().execute(newBaseURL);
             mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
-        }
     }
 
     @Override
@@ -94,6 +92,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     public class PokeSearchTask extends AsyncTask<String, Void, String> {
 
         @Override
