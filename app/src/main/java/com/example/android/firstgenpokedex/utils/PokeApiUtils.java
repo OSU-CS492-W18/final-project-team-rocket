@@ -1,7 +1,6 @@
 package com.example.android.firstgenpokedex.utils;
 
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import org.json.JSONArray;
@@ -79,21 +78,6 @@ public class PokeApiUtils {
                 JSONObject resultItem = searchResultsItems.getJSONObject(i);
                 result.fullName = resultItem.getJSONObject("pokemon_species").getString("name");
                 result.pokemonURL = GITHUB_SEARCH_BASE_URL + "pokemon/" + result.fullName + "/";
-
-//                String addPokemon = NetworkUtils.doHTTPGet(result.pokemonURL);
- //               JSONObject newPokemon = new JSONObject(addPokemon);
- //               result.ability1 = newPokemon.getJSONObject("abilities").getJSONObject("0").getJSONObject("ability").getString("name");
- //               result.pokemonURL = Uri.parse(GITHUB_SEARCH_BASE_URL + "/pokemon/" + result.fullName + "/").buildUpon();
-//                JSONObject newPokemon = new JSONObject(builder.build().toString());
-//                result.id = newPokemon.getInt("id");
-//                result.ability = newPokemon.getJSONObject("abilities").getJSONObject("0").getJSONObject("ability").getString("name");
-                //result.hAbility = newPokemon.getJSONObject("abilities").getJSONObject("1").getJSONObject("ability").getString("name");
-
-
-
-//                result.description = resultItem.getString("description");
-//                result.htmlURL = resultItem.getString("html_url");
-//                result.stars = resultItem.getInt("stargazers_count");
                 searchResultsList.add(result);
             }
             return searchResultsList;
@@ -101,5 +85,4 @@ public class PokeApiUtils {
             return null;
         }
     }
-
 }

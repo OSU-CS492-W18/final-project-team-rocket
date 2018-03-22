@@ -3,6 +3,7 @@
 
     <item
         android:title="Pokedéx"
+
         android:icon="@drawable/home_temp_pokedex"
         ></item>
 

@@ -23,16 +23,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SearchResultDetailActivity extends AppCompatActivity  {
+import android.net.Uri;
+import android.support.v4.app.ShareCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.android.firstgenpokedex.utils.PokeApiUtils;
+
+public class SearchResultDetailActivity extends AppCompatActivity {
 
     private TextView mTVSearchResultName;
     private TextView mTVSearchResultStars;
     private TextView mTVSearchResultDescription;
-
     public JSONObject pokemonInfo, evolutionInfo;
 
     public String typeStr, spriteURL;
     public String ability1, ability2;
     public boolean ability1Hidden, ability2Hidden;
+    private ImageView mTVSearchResultAvi;
+    private TextView mTVSearchResultType;
 
     private PokeApiUtils.SearchResult mSearchResult;
 
@@ -44,12 +57,12 @@ public class SearchResultDetailActivity extends AppCompatActivity  {
         mTVSearchResultStars = (TextView)findViewById(R.id.tv_search_result_stars);
         mTVSearchResultDescription = (TextView)findViewById(R.id.tv_search_result_description);
 
+        mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
             mSearchResult = (PokeApiUtils.SearchResult) intent.getSerializableExtra(PokeApiUtils.EXTRA_SEARCH_RESULT);
             mTVSearchResultName.setText(mSearchResult.fullName);
-            //mTVSearchResultStars.setText(String.valueOf(mSearchResult.stars));
             mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
         }
 
@@ -58,6 +71,8 @@ public class SearchResultDetailActivity extends AppCompatActivity  {
         Log.d("DETAIL", "querying search URL: " + newBaseURL);
 
         new PokeSearchTask().execute(newBaseURL);
+            mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
+        }
     }
 
     @Override
@@ -79,7 +94,6 @@ public class SearchResultDetailActivity extends AppCompatActivity  {
                 return super.onOptionsItemSelected(item);
         }
     }
-
     public class PokeSearchTask extends AsyncTask<String, Void, String> {
 
         @Override
@@ -152,30 +166,5 @@ public class SearchResultDetailActivity extends AppCompatActivity  {
                 Log.d("POKEMON_INFO","IS NULL!");
             }
         }
-
-
-//    public void viewRepoOnWeb() {
-//        if (mSearchResult != null) {
-//            Uri githubRepoURL = Uri.parse(mSearchResult.htmlURL);
-
-//            Intent webIntent = new Intent(Intent.ACTION_VIEW, githubRepoURL);
-//            if (webIntent.resolveActivity(getPackageManager()) != null) {
-//                startActivity(webIntent);
-//            }
-//        }
-//    }
-//
-//    public void shareRepo() {
-//        if (mSearchResult != null) {
-//            String shareText = getString(R.string.share_text_prefix) + ": " +
-//                  mSearchResult.fullName + ", " + mSearchResult.htmlURL;
-//
-//            ShareCompat.IntentBuilder.from(this)
-//                    .setChooserTitle(R.string.share_chooser_title)
-//                    .setType("text/plain")
-//                    .setText(shareText)
-//                    .startChooser();
-//        }
-//    }
     }
 }

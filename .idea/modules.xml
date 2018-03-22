@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GitHubSearchWithPrefs.iml" filepath="$PROJECT_DIR$/GitHubSearchWithPrefs.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\monic\Desktop\College\College Sr\Winter '18\Mobile Development\final-project-team-rocket\app\app.iml" filepath="C:\Users\monic\Desktop\College\College Sr\Winter '18\Mobile Development\final-project-team-rocket\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/final-project-team-rocket.iml" filepath="$PROJECT_DIR$/final-project-team-rocket.iml" />
+      <module fileurl="file://C:\Users\monic\Desktop\College\College Sr\Winter '18\Mobile Development\final-project-team-rocket\final-project-team-rocket.iml" filepath="C:\Users\monic\Desktop\College\College Sr\Winter '18\Mobile Development\final-project-team-rocket\final-project-team-rocket.iml" />
     </modules>
   </component>
 </project>

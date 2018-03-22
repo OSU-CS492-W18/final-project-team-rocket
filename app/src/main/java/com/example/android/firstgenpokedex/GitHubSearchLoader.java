@@ -9,7 +9,6 @@ import com.example.android.firstgenpokedex.utils.NetworkUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 
 /**
@@ -17,7 +16,6 @@ import java.io.IOException;
  */
 
 public class GitHubSearchLoader extends AsyncTaskLoader<String> {
-    private final static String TAG = GitHubSearchLoader.class.getSimpleName();
     private final static String NEW_BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
 
     private String mSearchResultsJSON;
@@ -42,16 +40,14 @@ public class GitHubSearchLoader extends AsyncTaskLoader<String> {
 
     @Override
     public String loadInBackground() {
-        JSONArray pokemonArray = new JSONArray();
-        String searchResults = null;
         if (mGitHubSearchURL != null) {
             Log.d(TAG, "loading results from Pokeapi with URL: " + mGitHubSearchURL);
-             try {
-                 searchResults = NetworkUtils.doHTTPGet(mGitHubSearchURL);
-             } catch (IOException e) {
-                 e.printStackTrace();
-             }
-            Log.d("LOADER",pokemonArray.toString());
+            String searchResults = null;
+            try {
+                searchResults = NetworkUtils.doHTTPGet(mGitHubSearchURL);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return searchResults;
         } else {
             return null;
