@@ -1,31 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.android.firstgenpokedex.SearchResultDetailActivity">
 
-    <TextView
-        android:id="@+id/tv_search_result_name"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="fill_horizontal"
+        >
+
+        <TextView
+            android:id="@+id/tv_search_result_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:padding="16dp"
+            android:textColor="#000"/>
+
+        <ImageView
+            android:id="@+id/action_battle_cry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:src="@drawable/dex_detail_cry"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/tv_search_result_avi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:padding="16dp"
-        android:textColor="#000"/>
+        app:srcCompat="@drawable/temp_avi" />
+
+    <TextView
+        android:id="@+id/tv_search_result_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:src="@drawable/ic_star_border_black_36dp"/>
 
         <TextView
             android:id="@+id/tv_search_result_stars"
