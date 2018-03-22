@@ -1,6 +1,7 @@
 package com.example.android.firstgenpokedex;
 
 import android.content.Intent;
+import android.net.Network;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.ShareCompat;
@@ -27,9 +28,11 @@ public class SearchResultDetailActivity extends AppCompatActivity  {
     private TextView mTVSearchResultStars;
     private TextView mTVSearchResultDescription;
 
-    public JSONObject pokemonInfo;
+    public JSONObject pokemonInfo, evolutionInfo;
 
-    public String typeStr;
+    public String typeStr, spriteURL;
+    public String ability1, ability2;
+    public boolean ability1Hidden, ability2Hidden;
 
     private PokeApiUtils.SearchResult mSearchResult;
 
@@ -89,8 +92,14 @@ public class SearchResultDetailActivity extends AppCompatActivity  {
             try {
                 try {
                     JSONObject resultObj = new JSONObject(NetworkUtils.doHTTPGet(urls[0]));
-                    Log.d("DETAIL",resultObj.toString());
                     pokemonInfo = new JSONObject(resultObj.toString());
+                    Log.d("DETAIL",resultObj.toString());
+
+                    JSONObject speciesObj = new JSONObject(NetworkUtils.doHTTPGet(resultObj.getJSONObject("species").getString("url")));
+                    Log.d("DETAIL_S",speciesObj.toString());
+                    JSONObject evolutionObj = new JSONObject(NetworkUtils.doHTTPGet(speciesObj.getJSONObject("evolution_chain").getString("url")));
+                    evolutionInfo = new JSONObject(evolutionObj.toString());
+
                     return resultObj.toString();
                 } catch (IOException e2) {
                     e2.printStackTrace();
@@ -105,15 +114,37 @@ public class SearchResultDetailActivity extends AppCompatActivity  {
         protected void onPostExecute(String s) {
             Log.d("POSTEXECUTE", s);
             typeStr = "";
-            if(s != null) {
+            if(pokemonInfo != null) {
                 try {
-                    pokemonInfo = new JSONObject(s);
+                    //pokemonInfo = new JSONObject(s);
                     JSONArray typesJSONArray = pokemonInfo.getJSONArray("types");
                     for (int i = 0; i < typesJSONArray.length(); i++) {
                         typeStr = typeStr + typesJSONArray.getJSONObject(i).getJSONObject("type").getString("name") + ",";
                     }
-                    //typeStr = pokemonInfo.getJSONArray("types").getJSONObject(0).getJSONObject("type").getString("name");
-                    Log.d("DETAIL_MAIN", typeStr);
+
+                    JSONArray abilitiesJSONArray = pokemonInfo.getJSONArray("abilities");
+                    for (int i = 0; i < abilitiesJSONArray.length(); i++) {
+                        if(i == 0) {
+                            ability1 = abilitiesJSONArray.getJSONObject(0).getJSONObject("ability").getString("name");
+                            ability1 = ability1.substring(0, 1).toUpperCase() + ability1.substring(1);
+                            ability1Hidden = abilitiesJSONArray.getJSONObject(0).getBoolean("is_hidden");
+                        }
+                        if(i == 1) {
+                            ability2 = abilitiesJSONArray.getJSONObject(1).getJSONObject("ability").getString("name");
+                            ability2 = ability2.substring(0, 1).toUpperCase() + ability2.substring(1);
+                            ability2Hidden = abilitiesJSONArray.getJSONObject(1).getBoolean("is_hidden");
+                        }
+                    }
+
+                    spriteURL = pokemonInfo.getJSONObject("sprites").getString("front_default");
+
+                    Log.d("DETAIL_MAIN TYPES", typeStr);
+                    Log.d("DETAIL_MAIN ABILS", ability1 + ":" + Boolean.toString(ability1Hidden) + " " + ability2 + ":" + Boolean.toString(ability2Hidden));
+                    Log.d("DETAIL_MAIN SPRITE", spriteURL);
+
+                    if(evolutionInfo != null) {
+                        JSONArray evolutionChain = evolutionInfo.getJSONObject("chain").getJSONArray("evolves_to");
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
