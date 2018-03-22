@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.firstgenpokedex.utils.PokeApiUtils;
@@ -16,6 +17,8 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     private TextView mTVSearchResultName;
     private TextView mTVSearchResultStars;
     private TextView mTVSearchResultDescription;
+    private ImageView mTVSearchResultAvi;
+    private TextView mTVSearchResultType;
 
     private PokeApiUtils.SearchResult mSearchResult;
 
@@ -26,11 +29,13 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         mTVSearchResultName = (TextView)findViewById(R.id.tv_search_result_name);
         mTVSearchResultStars = (TextView)findViewById(R.id.tv_search_result_stars);
         mTVSearchResultDescription = (TextView)findViewById(R.id.tv_search_result_description);
+        mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
             mSearchResult = (PokeApiUtils.SearchResult) intent.getSerializableExtra(PokeApiUtils.EXTRA_SEARCH_RESULT);
             mTVSearchResultName.setText(mSearchResult.fullName);
+
             //mTVSearchResultStars.setText(String.valueOf(mSearchResult.stars));
             mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
         }
@@ -45,12 +50,12 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_view_repo:
+            //case R.id.action_view_repo:
                 //viewRepoOnWeb();
-                return true;
-            case R.id.action_share:
+                //return true;
+            //case R.id.action_share:
                 //shareRepo();
-                return true;
+                //return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
