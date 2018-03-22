@@ -1,4 +1,4 @@
-package com.example.android.githubsearchwithprefs;
+package com.example.android.firstgenpokedex;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.android.githubsearchwithprefs.utils.GitHubUtils;
+import com.example.android.firstgenpokedex.utils.PokeApiUtils;
 
 public class SearchResultDetailActivity extends AppCompatActivity {
 
@@ -17,7 +17,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     private TextView mTVSearchResultStars;
     private TextView mTVSearchResultDescription;
 
-    private GitHubUtils.SearchResult mSearchResult;
+    private PokeApiUtils.SearchResult mSearchResult;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,11 +28,11 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         mTVSearchResultDescription = (TextView)findViewById(R.id.tv_search_result_description);
 
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(GitHubUtils.EXTRA_SEARCH_RESULT)) {
-            mSearchResult = (GitHubUtils.SearchResult) intent.getSerializableExtra(GitHubUtils.EXTRA_SEARCH_RESULT);
+        if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
+            mSearchResult = (PokeApiUtils.SearchResult) intent.getSerializableExtra(PokeApiUtils.EXTRA_SEARCH_RESULT);
             mTVSearchResultName.setText(mSearchResult.fullName);
-            mTVSearchResultStars.setText(String.valueOf(mSearchResult.stars));
-            mTVSearchResultDescription.setText(mSearchResult.description);
+            //mTVSearchResultStars.setText(String.valueOf(mSearchResult.stars));
+            mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
         }
     }
 
@@ -46,36 +46,36 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_view_repo:
-                viewRepoOnWeb();
+                //viewRepoOnWeb();
                 return true;
             case R.id.action_share:
-                shareRepo();
+                //shareRepo();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void viewRepoOnWeb() {
-        if (mSearchResult != null) {
-            Uri githubRepoURL = Uri.parse(mSearchResult.htmlURL);
-            Intent webIntent = new Intent(Intent.ACTION_VIEW, githubRepoURL);
-            if (webIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(webIntent);
-            }
-        }
-    }
-
-    public void shareRepo() {
-        if (mSearchResult != null) {
-            String shareText = getString(R.string.share_text_prefix) + ": " +
-                  mSearchResult.fullName + ", " + mSearchResult.htmlURL;
-
-            ShareCompat.IntentBuilder.from(this)
-                    .setChooserTitle(R.string.share_chooser_title)
-                    .setType("text/plain")
-                    .setText(shareText)
-                    .startChooser();
-        }
-    }
+//    public void viewRepoOnWeb() {
+//        if (mSearchResult != null) {
+//            Uri githubRepoURL = Uri.parse(mSearchResult.htmlURL);
+//            Intent webIntent = new Intent(Intent.ACTION_VIEW, githubRepoURL);
+//            if (webIntent.resolveActivity(getPackageManager()) != null) {
+//                startActivity(webIntent);
+//            }
+//        }
+//    }
+//
+//    public void shareRepo() {
+//        if (mSearchResult != null) {
+//            String shareText = getString(R.string.share_text_prefix) + ": " +
+//                  mSearchResult.fullName + ", " + mSearchResult.htmlURL;
+//
+//            ShareCompat.IntentBuilder.from(this)
+//                    .setChooserTitle(R.string.share_chooser_title)
+//                    .setType("text/plain")
+//                    .setText(shareText)
+//                    .startChooser();
+//        }
+//    }
 }

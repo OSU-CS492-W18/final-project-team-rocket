@@ -1,10 +1,10 @@
-package com.example.android.githubsearchwithprefs;
+package com.example.android.firstgenpokedex;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-import com.example.android.githubsearchwithprefs.utils.NetworkUtils;
+import com.example.android.firstgenpokedex.utils.NetworkUtils;
 
 import java.io.IOException;
 
@@ -12,13 +12,13 @@ import java.io.IOException;
  * Created by hessro on 2/20/18.
  */
 
-public class PokeAPISearchLoader extends AsyncTaskLoader<String> {
-    private final static String TAG = PokeAPISearchLoader.class.getSimpleName();
+public class GitHubSearchLoader extends AsyncTaskLoader<String> {
+    private final static String TAG = GitHubSearchLoader.class.getSimpleName();
 
     private String mSearchResultsJSON;
     private String mGitHubSearchURL;
 
-    PokeAPISearchLoader(Context context, String url) {
+    GitHubSearchLoader(Context context, String url) {
         super(context);
         mGitHubSearchURL = url;
     }
@@ -38,7 +38,7 @@ public class PokeAPISearchLoader extends AsyncTaskLoader<String> {
     @Override
     public String loadInBackground() {
         if (mGitHubSearchURL != null) {
-            Log.d(TAG, "loading results from GitHub with URL: " + mGitHubSearchURL);
+            Log.d(TAG, "loading results from Pokeapi with URL: " + mGitHubSearchURL);
             String searchResults = null;
             try {
                 searchResults = NetworkUtils.doHTTPGet(mGitHubSearchURL);

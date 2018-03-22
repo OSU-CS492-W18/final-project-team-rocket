@@ -1,4 +1,4 @@
-package com.example.android.githubsearchwithprefs;
+package com.example.android.firstgenpokedex;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.githubsearchwithprefs.utils.GitHubUtils;
+import com.example.android.firstgenpokedex.utils.PokeApiUtils;
 
 import java.util.ArrayList;
 
@@ -15,14 +15,14 @@ import java.util.ArrayList;
  */
 
 public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapter.SearchResultViewHolder> {
-    private ArrayList<GitHubUtils.SearchResult> mSearchResultsList;
+    private ArrayList<PokeApiUtils.SearchResult> mSearchResultsList;
     OnSearchItemClickListener mSeachItemClickListener;
 
     GitHubSearchAdapter(OnSearchItemClickListener searchItemClickListener) {
         mSeachItemClickListener = searchItemClickListener;
     }
 
-    public void updateSearchResults(ArrayList<GitHubUtils.SearchResult> searchResultsList) {
+    public void updateSearchResults(ArrayList<PokeApiUtils.SearchResult> searchResultsList) {
         mSearchResultsList = searchResultsList;
         notifyDataSetChanged();
     }
@@ -44,7 +44,7 @@ public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapte
     }
 
     public interface OnSearchItemClickListener {
-        void onSearchItemClick(GitHubUtils.SearchResult searchResult);
+        void onSearchItemClick(PokeApiUtils.SearchResult searchResult);
     }
 
     @Override
@@ -62,13 +62,13 @@ public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GitHubUtils.SearchResult searchResult = mSearchResultsList.get(getAdapterPosition());
+                    PokeApiUtils.SearchResult searchResult = mSearchResultsList.get(getAdapterPosition());
                     mSeachItemClickListener.onSearchItemClick(searchResult);
                 }
             });
         }
 
-        public void bind(GitHubUtils.SearchResult searchResult) {
+        public void bind(PokeApiUtils.SearchResult searchResult) {
             mSearchResultTV.setText(searchResult.fullName);
         }
     }

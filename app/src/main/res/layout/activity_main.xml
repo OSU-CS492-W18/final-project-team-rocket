@@ -1,54 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8sp"
-    tools:context="com.example.android.githubsearchwithprefs.MainActivity">
+    xmlns:design="http://schemas.android.com/apk/res-auto">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8sp"
+        tools:context="com.example.android.firstgenpokedex.MainActivity">
 
-    <EditText
-        android:id="@+id/et_search_box"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:hint="Search GitHub..."/>
+        android:orientation="horizontal"
+        android:gravity="fill_horizontal"
+        >
 
-    <Button
-        android:id="@+id/btn_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Do Search"
-        android:textSize="22sp"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_search_results"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tv_loading_error"
+        <EditText
+            android:id="@+id/et_search_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:padding="16dp"
-            android:text="@string/loading_error_message"
-            android:visibility="invisible"/>
+            android:textSize="24sp"
+            android:hint="Search Pokedex..."
+            android:layout_weight="2"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            />
+    
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_inspect"
+            android:layout_weight="1"
+            android:paddingHorizontal="20dp"
+            />
 
-        <ProgressBar
-            android:id="@+id/pb_loading_indicator"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginTop="32dp"
-            android:layout_gravity="top|center_horizontal"
-            android:visibility="invisible"/>
-    </FrameLayout>
+    </LinearLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_search_results"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    
+            <TextView
+                android:id="@+id/tv_loading_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="16dp"
+                android:text="@string/loading_error_message"
+                android:visibility="invisible"/>
+    
+            <ProgressBar
+                android:id="@+id/pb_loading_indicator"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginTop="32dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="invisible"/>
+        </FrameLayout>
+        
+    </LinearLayout>
 
-
-</LinearLayout>
+    <android.support.design.widget.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Bottom_Navigator"
+        android:layout_gravity="bottom"
+        design:menu="@menu/bottom_nav"
+        android:background="?android:attr/windowBackground"
+        android:foreground="?attr/selectableItemBackground" />
+        <!--design:itemIconTint="@android:color/white"-->
+        <!--design:itemTextColor="@android:color/white"-->
+        <!--design:itemBackground="@color/colorPrimary"-->
+    
+</android.support.design.widget.CoordinatorLayout>
