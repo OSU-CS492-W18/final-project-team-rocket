@@ -3,11 +3,9 @@ package com.example.android.firstgenpokedex;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.EditTextPreference;
+import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
-/**
- * Created by hessro on 2/20/18.
- */
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
@@ -18,16 +16,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EditTextPreference userPref = (EditTextPreference) findPreference(getString(R.string.pref_user_key));
-        userPref.setSummary(userPref.getText());
+        ListPreference sortPreference = (ListPreference)findPreference(getString(R.string.pref_sort_key));
+        sortPreference.setSummary(sortPreference.getEntry());       // remember whatever sorting preference was set
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.pref_user_key))) {
-            EditTextPreference userPref = (EditTextPreference) findPreference(key);
-            userPref.setSummary(userPref.getText());
-        }
     }
 
     @Override
