@@ -1,6 +1,7 @@
 package com.example.android.firstgenpokedex.utils;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import org.json.JSONArray;
@@ -100,4 +101,5 @@ public class PokeApiUtils {
             return null;
         }
     }
+
 }
