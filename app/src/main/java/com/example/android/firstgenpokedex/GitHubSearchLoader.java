@@ -30,7 +30,7 @@ public class GitHubSearchLoader extends AsyncTaskLoader<String> {
     protected void onStartLoading() {
         if (mGitHubSearchURL != null) {
             if (mSearchResultsJSON != null) {
-                Log.d(TAG, "loader returning cached results");
+                Log.d("SOMETAG", "loader returning cached results");
                 deliverResult(mSearchResultsJSON);
             } else {
                 forceLoad();
@@ -41,7 +41,7 @@ public class GitHubSearchLoader extends AsyncTaskLoader<String> {
     @Override
     public String loadInBackground() {
         if (mGitHubSearchURL != null) {
-            Log.d(TAG, "loading results from Pokeapi with URL: " + mGitHubSearchURL);
+            Log.d("SOMETAG", "loading results from Pokeapi with URL: " + mGitHubSearchURL);
             String searchResults = null;
             try {
                 searchResults = NetworkUtils.doHTTPGet(mGitHubSearchURL);
