@@ -1,6 +1,7 @@
 package com.example.android.firstgenpokedex.utils;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import org.json.JSONArray;
@@ -24,10 +25,15 @@ public class PokeApiUtils {
     final static String GITHUB_SEARCH_QUERY_PARAM = "q";
     final static String GITHUB_SEARCH_SORT_PARAM = "sort";
 
-    public static class SearchResult implements Serializable {
+    public static class SearchResult implements Serializable , Comparable<SearchResult>{
         public String fullName;
         public String pokemonURL;
         public int entryNum;
+
+        @Override
+        public int compareTo(@NonNull SearchResult entry) {
+            return this.fullName.charAt(0);
+        }
     }
 
     public static String buildGitHubSearchURL(String searchQuery, String sort, String language,
