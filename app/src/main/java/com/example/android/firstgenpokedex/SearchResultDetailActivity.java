@@ -87,8 +87,24 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         mTVArrowOne = (ImageView) findViewById(R.id.tv_arrow_one);
         mTVArrowTwo = (ImageView) findViewById(R.id.tv_arrow_two);
 
-        final MediaPlayer battleCry = MediaPlayer.create(this, R.raw.p1);
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
+            mSearchResult = (PokeApiUtils.SearchResult) intent.getSerializableExtra(PokeApiUtils.EXTRA_SEARCH_RESULT);
+            mTVSearchResultName.setText(mSearchResult.fullName);
 
+        }
+        
+        int[] pokemonSounds = new int[151];
+        String filename;
+        for(int i = 0; i<151; i++){
+            filename = "p"+String.valueOf(i+1);
+            int rawId = getResources().getIdentifier(filename, "raw", getPackageName());
+            pokemonSounds[i] = rawId;
+        }
+
+        Log.d("INRESULTACTIVITY", "This is the file id we are using: " + pokemonSounds[mSearchResult.entryNum]);
+        final MediaPlayer battleCry = MediaPlayer.create(this, pokemonSounds[mSearchResult.entryNum]);
+        Log.d("INRESULTACTIVITY", "This is the battle cry media id we are using: " + battleCry);
         ImageButton battleCryBtn = (ImageButton) this.findViewById(R.id.action_battle_cry);
 
         battleCryBtn.setOnClickListener(new View.OnClickListener(){
@@ -97,13 +113,6 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                 battleCry.start();
             }
         });
-
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
-            mSearchResult = (PokeApiUtils.SearchResult) intent.getSerializableExtra(PokeApiUtils.EXTRA_SEARCH_RESULT);
-            mTVSearchResultName.setText(mSearchResult.fullName);
-
-        }
 
         // new get stuff
         String newBaseURL = "https://pokeapi.co/api/v2/pokemon/" + mSearchResult.fullName;
