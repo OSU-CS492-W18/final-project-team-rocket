@@ -3,15 +3,15 @@
     <string-array name="pref_sort_entries">
         <item>@string/pref_sort_entry_id</item>
         <item>@string/pref_sort_entry_alphabetically</item>
-        <item>@string/pref_sort_entry_type</item>
-        <item>@string/pref_sort_entry_evolution</item>
+        <!--<item>@string/pref_sort_entry_type</item>-->
+        <!--<item>@string/pref_sort_entry_evolution</item>-->
     </string-array>
 
     <string-array name="pref_sort_values">
         <item>@string/pref_sort_value_id</item>
         <item>@string/pref_sort_value_alphabetically</item>
-        <item>@string/pref_sort_value_type</item>
-        <item>@string/pref_sort_value_evolution</item>
+        <!--<item>@string/pref_sort_value_type</item>-->
+        <!--<item>@string/pref_sort_value_evolution</item>-->
     </string-array>
 
 </resources>

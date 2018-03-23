@@ -110,31 +110,30 @@ public class MainActivity extends AppCompatActivity
                 getString(R.string.pref_sort_default)
         );
 
-        String language = sharedPreferences.getString(
-                getString(R.string.pref_language_key),
-                getString(R.string.pref_language_default)
-        );
+//        String language = sharedPreferences.getString(
+//                getString(R.string.pref_language_key),
+//                getString(R.string.pref_language_default)
+//        );
+//
+//        String user = sharedPreferences.getString(
+//                getString(R.string.pref_user_key), ""
+//        );
+//
+//        boolean searchInName = sharedPreferences.getBoolean(
+//                getString(R.string.pref_in_name_key), true
+//        );
+//
+//        boolean searchInDescription = sharedPreferences.getBoolean(
+//                getString(R.string.pref_in_description_key), true
+//        );
+//
+//        boolean searchInReadme = sharedPreferences.getBoolean(
+//                getString(R.string.pref_in_readme_key), true
+//        );
 
-        String user = sharedPreferences.getString(
-                getString(R.string.pref_user_key), ""
-        );
-
-        boolean searchInName = sharedPreferences.getBoolean(
-                getString(R.string.pref_in_name_key), true
-        );
-
-        boolean searchInDescription = sharedPreferences.getBoolean(
-                getString(R.string.pref_in_description_key), true
-        );
-
-        boolean searchInReadme = sharedPreferences.getBoolean(
-                getString(R.string.pref_in_readme_key), true
-        );
-
-        String githubSearchURL = PokeApiUtils.buildGitHubSearchURL(searchQuery, sort, language,
-                user, searchInName, searchInDescription, searchInReadme);
+        String pokeapiURL = "https://pokeapi.co/api/v2/pokedex/kanto/";
         Bundle args = new Bundle();
-        args.putString(SEARCH_URL_KEY, githubSearchURL);
+        args.putString(SEARCH_URL_KEY, pokeapiURL);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
         getSupportLoaderManager().restartLoader(GITHUB_SEARCH_LOADER_ID, args, this);
     }
