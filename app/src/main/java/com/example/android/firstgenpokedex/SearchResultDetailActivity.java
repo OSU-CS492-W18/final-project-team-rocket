@@ -1,6 +1,7 @@
 package com.example.android.firstgenpokedex;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Network;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.android.firstgenpokedex.utils.NetworkUtils;
@@ -52,11 +55,22 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result_detail);
 
-        mTVSearchResultName = (TextView)findViewById(R.id.tv_search_result_name);
-        mTVSearchResultStars = (TextView)findViewById(R.id.tv_search_result_stars);
-        mTVSearchResultDescription = (TextView)findViewById(R.id.tv_search_result_description);
+        mTVSearchResultName = (TextView) findViewById(R.id.tv_search_result_name);
+        mTVSearchResultStars = (TextView) findViewById(R.id.tv_search_result_stars);
+        mTVSearchResultDescription = (TextView) findViewById(R.id.tv_search_result_description);
 
         mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
+
+        final MediaPlayer battleCry = MediaPlayer.create(this, R.raw.p1);
+
+        ImageButton battleCryBtn = (ImageButton) this.findViewById(R.id.action_battle_cry);
+
+        battleCryBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                battleCry.start();
+            }
+        });
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
@@ -70,7 +84,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         Log.d("DETAIL", "querying search URL: " + newBaseURL);
 
         new PokeSearchTask().execute(newBaseURL);
-            mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
+        mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
     }
 
     @Override
@@ -82,12 +96,12 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_view_repo:
-                //viewRepoOnWeb();
-                return true;
-            case R.id.action_share:
-                //shareRepo();
-                return true;
+//            //case R.id.action_view_repo:
+//                //viewRepoOnWeb();
+//                return true;
+//            //case R.id.action_share:
+//                //shareRepo();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -106,10 +120,10 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                 try {
                     JSONObject resultObj = new JSONObject(NetworkUtils.doHTTPGet(urls[0]));
                     pokemonInfo = new JSONObject(resultObj.toString());
-                    Log.d("DETAIL",resultObj.toString());
+                    Log.d("DETAIL", resultObj.toString());
 
                     JSONObject speciesObj = new JSONObject(NetworkUtils.doHTTPGet(resultObj.getJSONObject("species").getString("url")));
-                    Log.d("DETAIL_S",speciesObj.toString());
+                    Log.d("DETAIL_S", speciesObj.toString());
                     JSONObject evolutionObj = new JSONObject(NetworkUtils.doHTTPGet(speciesObj.getJSONObject("evolution_chain").getString("url")));
                     evolutionInfo = new JSONObject(evolutionObj.toString());
 
@@ -127,7 +141,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             Log.d("POSTEXECUTE", s);
             typeStr = "";
-            if(pokemonInfo != null) {
+            if (pokemonInfo != null) {
                 try {
                     //pokemonInfo = new JSONObject(s);
                     JSONArray typesJSONArray = pokemonInfo.getJSONArray("types");
@@ -137,12 +151,12 @@ public class SearchResultDetailActivity extends AppCompatActivity {
 
                     JSONArray abilitiesJSONArray = pokemonInfo.getJSONArray("abilities");
                     for (int i = 0; i < abilitiesJSONArray.length(); i++) {
-                        if(i == 0) {
+                        if (i == 0) {
                             ability1 = abilitiesJSONArray.getJSONObject(0).getJSONObject("ability").getString("name");
                             ability1 = ability1.substring(0, 1).toUpperCase() + ability1.substring(1);
                             ability1Hidden = abilitiesJSONArray.getJSONObject(0).getBoolean("is_hidden");
                         }
-                        if(i == 1) {
+                        if (i == 1) {
                             ability2 = abilitiesJSONArray.getJSONObject(1).getJSONObject("ability").getString("name");
                             ability2 = ability2.substring(0, 1).toUpperCase() + ability2.substring(1);
                             ability2Hidden = abilitiesJSONArray.getJSONObject(1).getBoolean("is_hidden");
@@ -155,14 +169,14 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                     Log.d("DETAIL_MAIN ABILS", ability1 + ":" + Boolean.toString(ability1Hidden) + " " + ability2 + ":" + Boolean.toString(ability2Hidden));
                     Log.d("DETAIL_MAIN SPRITE", spriteURL);
 
-                    if(evolutionInfo != null) {
+                    if (evolutionInfo != null) {
                         JSONArray evolutionChain = evolutionInfo.getJSONObject("chain").getJSONArray("evolves_to");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             } else {
-                Log.d("POKEMON_INFO","IS NULL!");
+                Log.d("POKEMON_INFO", "IS NULL!");
             }
         }
     }
