@@ -1,6 +1,9 @@
 package com.example.android.firstgenpokedex;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Network;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -20,6 +23,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import android.net.Uri;
@@ -68,8 +74,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         mTVSearchResultType2 = (TextView) findViewById(R.id.tv_search_result_type2);
         mTVSearchResultAbil = (TextView) findViewById(R.id.tv_search_result_ability);
         mTVSearchResultHidAbil = (TextView) findViewById(R.id.tv_search_result_hidden_ability);
-
-        mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
+        //mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
@@ -173,6 +178,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             return null;
         }
 
@@ -207,8 +213,11 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                     Log.d("DETAIL_MAIN TYPES", typeStr);
                     Log.d("DETAIL_MAIN ABILS", ability1 + ":" + Boolean.toString(ability1Hidden) + " " + ability2 + ":" + Boolean.toString(ability2Hidden));
                     Log.d("DETAIL_MAIN SPRITE", spriteURL);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+
                 }
             } else {
                 Log.d("POKEMON_INFO","IS NULL!");

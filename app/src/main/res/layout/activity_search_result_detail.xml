@@ -27,14 +27,8 @@
             android:id="@+id/tv_search_result_avi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginRight="20dp"
             android:paddingRight="30dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/search_result_padding"/>
 
         <ImageButton
             android:id="@+id/action_battle_cry"
