@@ -146,6 +146,42 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                     Log.d("DETAIL_E",evolutionObj.toString());
                     evolutionInfo = new JSONObject(evolutionObj.toString());
 
+                    typeStr = "";
+                    if (pokemonInfo != null) {
+                        try {
+                            //pokemonInfo = new JSONObject(s);
+                            JSONArray typesJSONArray = pokemonInfo.getJSONArray("types");
+                            for (int i = 0; i < typesJSONArray.length(); i++) {
+                                typeStr = typeStr + typesJSONArray.getJSONObject(i).getJSONObject("type").getString("name") + ",";
+                            }
+
+                            JSONArray abilitiesJSONArray = pokemonInfo.getJSONArray("abilities");
+                            for (int i = 0; i < abilitiesJSONArray.length(); i++) {
+                                if (i == 0) {
+                                    ability1 = abilitiesJSONArray.getJSONObject(0).getJSONObject("ability").getString("name");
+                                    ability1 = ability1.substring(0, 1).toUpperCase() + ability1.substring(1);
+                                    ability1Hidden = abilitiesJSONArray.getJSONObject(0).getBoolean("is_hidden");
+                                }
+                                if (i == 1) {
+                                    ability2 = abilitiesJSONArray.getJSONObject(1).getJSONObject("ability").getString("name");
+                                    ability2 = ability2.substring(0, 1).toUpperCase() + ability2.substring(1);
+                                    ability2Hidden = abilitiesJSONArray.getJSONObject(1).getBoolean("is_hidden");
+                                }
+                            }
+
+                            spriteURL = pokemonInfo.getJSONObject("sprites").getString("front_default");
+
+                            Log.d("DETAIL_MAIN TYPES", typeStr);
+                            Log.d("DETAIL_MAIN ABILS", ability1 + ":" + Boolean.toString(ability1Hidden) + " " + ability2 + ":" + Boolean.toString(ability2Hidden));
+                            Log.d("DETAIL_MAIN SPRITE", spriteURL);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.d("POKEMON_INFO", "IS NULL!");
+                    }
+
+
                     if(evolutionInfo != null) {
                         evolutionImageURLs = new ArrayList<String>();
                         JSONObject evolutionChain = evolutionInfo.getJSONObject("chain");
@@ -176,6 +212,8 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                             ie.printStackTrace();
                         }
 
+
+
                     }
 
                     return resultObj.toString();
@@ -185,46 +223,13 @@ public class SearchResultDetailActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
             Log.d("POSTEXECUTE", s);
-            typeStr = "";
-            if (pokemonInfo != null) {
-                try {
-                    //pokemonInfo = new JSONObject(s);
-                    JSONArray typesJSONArray = pokemonInfo.getJSONArray("types");
-                    for (int i = 0; i < typesJSONArray.length(); i++) {
-                        typeStr = typeStr + typesJSONArray.getJSONObject(i).getJSONObject("type").getString("name") + ",";
-                    }
-
-                    JSONArray abilitiesJSONArray = pokemonInfo.getJSONArray("abilities");
-                    for (int i = 0; i < abilitiesJSONArray.length(); i++) {
-                        if (i == 0) {
-                            ability1 = abilitiesJSONArray.getJSONObject(0).getJSONObject("ability").getString("name");
-                            ability1 = ability1.substring(0, 1).toUpperCase() + ability1.substring(1);
-                            ability1Hidden = abilitiesJSONArray.getJSONObject(0).getBoolean("is_hidden");
-                        }
-                        if (i == 1) {
-                            ability2 = abilitiesJSONArray.getJSONObject(1).getJSONObject("ability").getString("name");
-                            ability2 = ability2.substring(0, 1).toUpperCase() + ability2.substring(1);
-                            ability2Hidden = abilitiesJSONArray.getJSONObject(1).getBoolean("is_hidden");
-                        }
-                    }
-
-                    spriteURL = pokemonInfo.getJSONObject("sprites").getString("front_default");
-
-                    Log.d("DETAIL_MAIN TYPES", typeStr);
-                    Log.d("DETAIL_MAIN ABILS", ability1 + ":" + Boolean.toString(ability1Hidden) + " " + ability2 + ":" + Boolean.toString(ability2Hidden));
-                    Log.d("DETAIL_MAIN SPRITE", spriteURL);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Log.d("POKEMON_INFO", "IS NULL!");
-            }
         }
     }
 }
