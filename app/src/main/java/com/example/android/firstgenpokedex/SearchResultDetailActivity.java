@@ -67,9 +67,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         mTVSearchResultType2 = (TextView) findViewById(R.id.tv_search_result_type2);
         mTVSearchResultAbil = (TextView) findViewById(R.id.tv_search_result_ability);
         mTVSearchResultHidAbil = (TextView) findViewById(R.id.tv_search_result_hidden_ability);
-
-        mTVSearchResultStars = (TextView)findViewById(R.id.tv_search_result_stars);
-        mTVSearchResultDescription = (TextView)findViewById(R.id.tv_search_result_description);
+        
 
         mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
 

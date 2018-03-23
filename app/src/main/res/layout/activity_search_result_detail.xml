@@ -40,9 +40,8 @@
             android:id="@+id/action_battle_cry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="30dp"
-            android:background="@color/colorAccent2"
-            android:src="@drawable/dex_detail_cry" />
+            android:padding="50dp"
+            android:background="@mipmap/dex_detail_cry2_round"/>
 
     </LinearLayout>
 
