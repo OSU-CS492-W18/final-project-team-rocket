@@ -46,6 +46,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     public String typeStr, spriteURL;
     public String ability1, ability2;
     public boolean ability1Hidden, ability2Hidden;
+    public ArrayList<String> evolutionImageURLs;
 
     private ImageView mTVSearchResultAvi;
     private TextView mTVSearchResultType1;
@@ -67,7 +68,6 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         mTVSearchResultType2 = (TextView) findViewById(R.id.tv_search_result_type2);
         mTVSearchResultAbil = (TextView) findViewById(R.id.tv_search_result_ability);
         mTVSearchResultHidAbil = (TextView) findViewById(R.id.tv_search_result_hidden_ability);
-        
 
         mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
 
@@ -90,7 +90,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         Log.d("DETAIL", "querying search URL: " + newBaseURL);
 
         new PokeSearchTask().execute(newBaseURL);
-            mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
+            //mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
     }
 
     @Override
@@ -102,12 +102,12 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_view_repo:
-                //viewRepoOnWeb();
-                return true;
-            case R.id.action_share:
-                //shareRepo();
-                return true;
+//            case R.id.action_view_repo:
+//                //viewRepoOnWeb();
+//                return true;
+//            case R.id.action_share:
+//                //shareRepo();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -131,7 +131,40 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                     JSONObject speciesObj = new JSONObject(NetworkUtils.doHTTPGet(resultObj.getJSONObject("species").getString("url")));
                     Log.d("DETAIL_S",speciesObj.toString());
                     JSONObject evolutionObj = new JSONObject(NetworkUtils.doHTTPGet(speciesObj.getJSONObject("evolution_chain").getString("url")));
+                    Log.d("DETAIL_E",evolutionObj.toString());
                     evolutionInfo = new JSONObject(evolutionObj.toString());
+
+                    if(evolutionInfo != null) {
+                        evolutionImageURLs = new ArrayList<String>();
+                        JSONObject evolutionChain = evolutionInfo.getJSONObject("chain");
+                        try {
+                            JSONObject imgObj = new JSONObject(NetworkUtils.doHTTPGet("https://pokeapi.co/api/v2/pokemon/" + evolutionChain.getJSONObject("species").getString("name")));
+                            String imgURL = imgObj.getJSONObject("sprites").getString("front_default");
+                            evolutionImageURLs.add(imgURL);
+
+                            JSONArray imgJSONArray = evolutionChain.getJSONArray("evolves_to");
+                            if(!imgJSONArray.isNull(0)) {
+                                imgObj = new JSONObject(NetworkUtils.doHTTPGet("https://pokeapi.co/api/v2/pokemon/" + imgJSONArray.getJSONObject(0).getJSONObject("species").getString("name")));
+                                imgURL = imgObj.getJSONObject("sprites").getString("front_default");
+                                evolutionImageURLs.add(imgURL);
+
+                                JSONArray imgJSONArray_F = imgJSONArray.getJSONObject(0).getJSONArray("evolves_to");
+                                if(!imgJSONArray_F.isNull(0)) {
+                                    imgObj = new JSONObject(NetworkUtils.doHTTPGet("https://pokeapi.co/api/v2/pokemon/" + imgJSONArray_F.getJSONObject(0).getJSONObject("species").getString("name")));
+                                    imgURL = imgObj.getJSONObject("sprites").getString("front_default");
+                                    evolutionImageURLs.add(imgURL);
+                                }
+                            }
+
+                            for (String iUrl : evolutionImageURLs) {
+                                Log.d("IMAGE URL ", "0 " + iUrl);
+                            }
+
+                        } catch (IOException ie) {
+                            ie.printStackTrace();
+                        }
+
+                    }
 
                     return resultObj.toString();
                 } catch (IOException e2) {
@@ -174,10 +207,6 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                     Log.d("DETAIL_MAIN TYPES", typeStr);
                     Log.d("DETAIL_MAIN ABILS", ability1 + ":" + Boolean.toString(ability1Hidden) + " " + ability2 + ":" + Boolean.toString(ability2Hidden));
                     Log.d("DETAIL_MAIN SPRITE", spriteURL);
-
-                    if(evolutionInfo != null) {
-                        JSONArray evolutionChain = evolutionInfo.getJSONObject("chain").getJSONArray("evolves_to");
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
