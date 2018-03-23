@@ -3,10 +3,6 @@ package com.example.android.firstgenpokedex;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-<<<<<<< HEAD
-import android.graphics.drawable.Drawable;
-=======
->>>>>>> 99dc6c3a23885b2a8b3f0eab26c5af34a3a19e42
 import android.media.MediaPlayer;
 import android.net.Network;
 import android.net.Uri;
@@ -30,10 +26,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-<<<<<<< HEAD
-import java.io.InputStream;
-=======
->>>>>>> 99dc6c3a23885b2a8b3f0eab26c5af34a3a19e42
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
