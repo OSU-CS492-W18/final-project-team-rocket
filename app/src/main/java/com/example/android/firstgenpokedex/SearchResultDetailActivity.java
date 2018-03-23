@@ -3,6 +3,7 @@ package com.example.android.firstgenpokedex;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Network;
 import android.net.Uri;
@@ -61,6 +62,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     private ImageView mTVEvoTreeThree;
     private TextView mTVSearchResultType1;
     private TextView mTVSearchResultType2;
+    private View mTVSearchResultSpacer;
     private TextView mTVSearchResultAbil;
     private TextView mTVSearchResultHidAbil;
     private ImageView mTVArrowOne;
@@ -75,6 +77,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         mTVSearchResultName = (TextView) findViewById(R.id.tv_search_result_name);
         mTVSearchResultType1 = (TextView) findViewById(R.id.tv_search_result_type1);
         mTVSearchResultType2 = (TextView) findViewById(R.id.tv_search_result_type2);
+        mTVSearchResultSpacer = (View) findViewById(R.id.tv_search_spacer);
         mTVSearchResultAbil = (TextView) findViewById(R.id.tv_search_result_ability);
         mTVSearchResultHidAbil = (TextView) findViewById(R.id.tv_search_result_hidden_ability);
         mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
@@ -104,6 +107,8 @@ public class SearchResultDetailActivity extends AppCompatActivity {
 
         // new get stuff
         String newBaseURL = "https://pokeapi.co/api/v2/pokemon/" + mSearchResult.fullName;
+        String newName = mSearchResult.fullName.substring(0,1).toUpperCase() + mSearchResult.fullName.substring(1);
+        mTVSearchResultName.setText(newName);
         Log.d("DETAIL", "querying search URL: " + newBaseURL);
 
         new PokeSearchTask().execute(newBaseURL);
@@ -163,7 +168,8 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                             //pokemonInfo = new JSONObject(s);
                             JSONArray typesJSONArray = pokemonInfo.getJSONArray("types");
                             for (int i = 0; i < typesJSONArray.length(); i++) {
-                                typeStr.add(typesJSONArray.getJSONObject(i).getJSONObject("type").getString("name"));
+                                type = typesJSONArray.getJSONObject(i).getJSONObject("type").getString("name").substring(0, 1).toUpperCase() + typesJSONArray.getJSONObject(i).getJSONObject("type").getString("name").substring(1);
+                                typeStr.add(type);
                                 Log.d("DETAIL_T",typeStr.toString());
                             }
 
@@ -248,6 +254,61 @@ public class SearchResultDetailActivity extends AppCompatActivity {
             return null;
         }
 
+        private String typeColor(String type) {
+            if (type.equals("Normal")) {
+                return "A8A77A";
+            }
+            else if (type.equals("Fire")) {
+                return "EE8130";
+            }
+            else if (type.equals("Water")) {
+                return "6390F0";
+            }
+            else if (type.equals("Electric")) {
+                return "F7D02C";
+            }
+            else if (type.equals("Grass")) {
+                return "7AC74C";
+            }
+            else if (type.equals("Fighting")) {
+                return "C22E28";
+            }
+            else if (type.equals("Poison")) {
+                return "A33EA1";
+            }
+            else if (type.equals("Ground")) {
+                return "E2BF65";
+            }
+            else if (type.equals("Flying")) {
+                return "A98FF3";
+            }
+            else if (type.equals("Psychic")) {
+                return "F95587";
+            }
+            else if (type.equals("Bug")) {
+                return "A6B91A";
+            }
+            else if (type.equals("Rock")) {
+                return "B6A136";
+            }
+            else if (type.equals("Ghost")) {
+                return "735797";
+            }
+            else if (type.equals("Dragon")) {
+                return "6F35FC";
+            }
+            else if (type.equals("Dark")) {
+                return "705746";
+            }
+            else if (type.equals("Steel")) {
+                return "B7B7CE";
+            }
+            else if (type.equals("Fairy")) {
+                return "D685AD";
+            }
+            return "";
+        }
+
         @Override
         protected void onPostExecute(String s) {
             //  Log.d("POSTEXECUTE", s);
@@ -258,14 +319,24 @@ public class SearchResultDetailActivity extends AppCompatActivity {
 
             if(typeStr.size() > 1) {
                 mTVSearchResultType1.setText(typeStr.get(1));
+                mTVSearchResultType1.setBackgroundColor(Color.parseColor("#" + typeColor(typeStr.get(1))));
+
                 mTVSearchResultType2.setText(typeStr.get(0));
+                mTVSearchResultType2.setBackgroundColor(Color.parseColor("#" + typeColor(typeStr.get(0))));
+                mTVSearchResultType2.setVisibility(View.VISIBLE);
+                mTVSearchResultSpacer.setVisibility(View.VISIBLE);
+
             }
             else{
                 mTVSearchResultType1.setText(typeStr.get(0));
+                mTVSearchResultType1.setBackgroundColor(Color.parseColor("#" + typeColor(typeStr.get(0))));
+                mTVSearchResultType2.setVisibility(View.GONE);
+                mTVSearchResultSpacer.setVisibility(View.GONE);
             }
 
             if(ability1Hidden == true){
                 mTVSearchResultHidAbil.setText(ability1);
+
             }
             else {
                 mTVSearchResultAbil.setText(ability1);

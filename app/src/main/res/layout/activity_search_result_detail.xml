@@ -7,10 +7,20 @@
     android:orientation="vertical"
     tools:context="com.example.android.firstgenpokedex.SearchResultDetailActivity">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#fafafa" />
+
     <TextView
         android:id="@+id/tv_search_result_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:textSize="40sp"
         android:padding="5dp"
         android:textColor="#000"/>
@@ -18,9 +28,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal"
-        android:gravity="center"
-        >
+        android:gravity="center">
 
 
         <ImageView
@@ -42,22 +52,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="fill_horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
         >
 
         <TextView
             android:id="@+id/tv_search_result_type1"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:paddingHorizontal="30dp"
-            android:padding="10dp"
-            android:textSize="18dp"/>
+            android:padding="6dp"
+            android:textSize="18dp"
+            android:textColor="#ffffff"/>
+
+        <View
+            android:id="@+id/tv_search_spacer"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="#fafafa"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_search_result_type2"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:textSize="18dp"/>
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:padding="6dp"
+            android:textColor="#ffffff"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
@@ -66,7 +95,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="fill_horizontal"
+
+        android:layout_gravity="center"
+        android:gravity="center"
         >
 
         <TextView
@@ -90,7 +121,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="fill_horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
         >
 
         <TextView
