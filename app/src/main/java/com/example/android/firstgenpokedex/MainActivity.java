@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
         mLoadingProgressBar = (ProgressBar)findViewById(R.id.pb_loading_indicator);
         mLoadingErrorMessage = (TextView)findViewById(R.id.tv_loading_error);
 
-        mSearchBoxET = (EditText)findViewById(R.id.et_search_box);
+
         mSearchResultsRV = (RecyclerView)findViewById(R.id.rv_search_results);
 
         mSearchResultsRV.setLayoutManager(new LinearLayoutManager(this));
@@ -60,14 +60,6 @@ public class MainActivity extends AppCompatActivity
         mSearchResultsRV.setAdapter(mGitHubSearchAdapter);
 
         iChooseU();
-
-        ImageButton searchButton = (ImageButton)findViewById(R.id.btn_search);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                iChooseU();
-            }
-        });
 
         getSupportLoaderManager().initLoader(GITHUB_SEARCH_LOADER_ID, null, this);
     }
@@ -98,7 +90,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void iChooseU() {
-        String searchQuery = mSearchBoxET.getText().toString();
 
 //        if (!TextUtils.isEmpty(searchQuery)) {
 //            doGitHubSearch(searchQuery);

@@ -90,6 +90,14 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#fafafa"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -141,6 +149,15 @@
             android:textSize="18dp"/>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#fafafa"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"

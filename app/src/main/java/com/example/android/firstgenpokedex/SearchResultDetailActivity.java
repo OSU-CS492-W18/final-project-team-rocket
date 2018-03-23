@@ -132,13 +132,9 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            //case R.id.action_view_repo:
-//                //viewRepoOnWeb();
-//                return true;
-//            //case R.id.action_share:
-
-//                //shareRepo();
-//                return true;
+            case R.id.action_view_onweb:
+                viewPokemonOnWeb();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -392,6 +388,16 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                         .into(mTVEvoTreeOne);
             }
 
+        }
+    }
+
+    public void viewPokemonOnWeb() {
+        if(mSearchResult != null) {
+            Uri wikiaURL = Uri.parse("https://pokemon.wikia.com/wiki/" + mSearchResult.fullName);
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, wikiaURL);
+            if(webIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(webIntent);
+            }
         }
     }
 }
