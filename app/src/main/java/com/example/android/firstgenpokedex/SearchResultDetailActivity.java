@@ -36,18 +36,26 @@ import android.widget.TextView;
 
 import com.example.android.firstgenpokedex.utils.PokeApiUtils;
 
+import org.w3c.dom.Text;
+
 public class SearchResultDetailActivity extends AppCompatActivity {
 
     private TextView mTVSearchResultName;
     private TextView mTVSearchResultStars;
+
     private TextView mTVSearchResultDescription;
     public JSONObject pokemonInfo, evolutionInfo;
 
     public String typeStr, spriteURL;
     public String ability1, ability2;
     public boolean ability1Hidden, ability2Hidden;
+    public ArrayList<String> evolutionImageURLs;
+
     private ImageView mTVSearchResultAvi;
-    private TextView mTVSearchResultType;
+    private TextView mTVSearchResultType1;
+    private TextView mTVSearchResultType2;
+    private TextView mTVSearchResultAbil;
+    private TextView mTVSearchResultHidAbil;
 
     private PokeApiUtils.SearchResult mSearchResult;
 
@@ -56,8 +64,11 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result_detail);
 
         mTVSearchResultName = (TextView) findViewById(R.id.tv_search_result_name);
-        mTVSearchResultStars = (TextView) findViewById(R.id.tv_search_result_stars);
-        mTVSearchResultDescription = (TextView) findViewById(R.id.tv_search_result_description);
+        mTVSearchResultType1 = (TextView) findViewById(R.id.tv_search_result_type1);
+        mTVSearchResultType2 = (TextView) findViewById(R.id.tv_search_result_type2);
+        mTVSearchResultAbil = (TextView) findViewById(R.id.tv_search_result_ability);
+        mTVSearchResultHidAbil = (TextView) findViewById(R.id.tv_search_result_hidden_ability);
+
 
         mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
 
@@ -76,7 +87,14 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
             mSearchResult = (PokeApiUtils.SearchResult) intent.getSerializableExtra(PokeApiUtils.EXTRA_SEARCH_RESULT);
             mTVSearchResultName.setText(mSearchResult.fullName);
-            mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
+
+            mTVSearchResultType1.setText("Type 1");
+            mTVSearchResultType2.setText("Type 2");
+            mTVSearchResultAbil.setText("Ability");
+            mTVSearchResultHidAbil.setText("Hidden Ability");
+            //mTVSearchResultStars.setText(String.valueOf(mSearchResult.stars));
+//            mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
+
         }
 
         // new get stuff
@@ -84,7 +102,6 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         Log.d("DETAIL", "querying search URL: " + newBaseURL);
 
         new PokeSearchTask().execute(newBaseURL);
-        mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
     }
 
     @Override
@@ -100,6 +117,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
 //                //viewRepoOnWeb();
 //                return true;
 //            //case R.id.action_share:
+
 //                //shareRepo();
 //                return true;
             default:
@@ -125,7 +143,40 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                     JSONObject speciesObj = new JSONObject(NetworkUtils.doHTTPGet(resultObj.getJSONObject("species").getString("url")));
                     Log.d("DETAIL_S", speciesObj.toString());
                     JSONObject evolutionObj = new JSONObject(NetworkUtils.doHTTPGet(speciesObj.getJSONObject("evolution_chain").getString("url")));
+                    Log.d("DETAIL_E",evolutionObj.toString());
                     evolutionInfo = new JSONObject(evolutionObj.toString());
+
+                    if(evolutionInfo != null) {
+                        evolutionImageURLs = new ArrayList<String>();
+                        JSONObject evolutionChain = evolutionInfo.getJSONObject("chain");
+                        try {
+                            JSONObject imgObj = new JSONObject(NetworkUtils.doHTTPGet("https://pokeapi.co/api/v2/pokemon/" + evolutionChain.getJSONObject("species").getString("name")));
+                            String imgURL = imgObj.getJSONObject("sprites").getString("front_default");
+                            evolutionImageURLs.add(imgURL);
+
+                            JSONArray imgJSONArray = evolutionChain.getJSONArray("evolves_to");
+                            if(!imgJSONArray.isNull(0)) {
+                                imgObj = new JSONObject(NetworkUtils.doHTTPGet("https://pokeapi.co/api/v2/pokemon/" + imgJSONArray.getJSONObject(0).getJSONObject("species").getString("name")));
+                                imgURL = imgObj.getJSONObject("sprites").getString("front_default");
+                                evolutionImageURLs.add(imgURL);
+
+                                JSONArray imgJSONArray_F = imgJSONArray.getJSONObject(0).getJSONArray("evolves_to");
+                                if(!imgJSONArray_F.isNull(0)) {
+                                    imgObj = new JSONObject(NetworkUtils.doHTTPGet("https://pokeapi.co/api/v2/pokemon/" + imgJSONArray_F.getJSONObject(0).getJSONObject("species").getString("name")));
+                                    imgURL = imgObj.getJSONObject("sprites").getString("front_default");
+                                    evolutionImageURLs.add(imgURL);
+                                }
+                            }
+
+                            for (String iUrl : evolutionImageURLs) {
+                                Log.d("IMAGE URL ", "0 " + iUrl);
+                            }
+
+                        } catch (IOException ie) {
+                            ie.printStackTrace();
+                        }
+
+                    }
 
                     return resultObj.toString();
                 } catch (IOException e2) {
@@ -168,10 +219,6 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                     Log.d("DETAIL_MAIN TYPES", typeStr);
                     Log.d("DETAIL_MAIN ABILS", ability1 + ":" + Boolean.toString(ability1Hidden) + " " + ability2 + ":" + Boolean.toString(ability2Hidden));
                     Log.d("DETAIL_MAIN SPRITE", spriteURL);
-
-                    if (evolutionInfo != null) {
-                        JSONArray evolutionChain = evolutionInfo.getJSONObject("chain").getJSONArray("evolves_to");
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
