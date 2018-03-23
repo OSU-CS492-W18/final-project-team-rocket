@@ -2,6 +2,7 @@ package com.example.android.firstgenpokedex;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,10 @@ import android.widget.TextView;
 
 import com.example.android.firstgenpokedex.utils.PokeApiUtils;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity
         implements GitHubSearchAdapter.OnSearchItemClickListener, LoaderManager.LoaderCallbacks<String> {
@@ -55,17 +59,23 @@ public class MainActivity extends AppCompatActivity
         mGitHubSearchAdapter = new GitHubSearchAdapter(this);
         mSearchResultsRV.setAdapter(mGitHubSearchAdapter);
 
-        doGitHubSearch();
+        iChooseU();
 
         ImageButton searchButton = (ImageButton)findViewById(R.id.btn_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doGitHubSearch();
+                iChooseU();
             }
         });
 
         getSupportLoaderManager().initLoader(GITHUB_SEARCH_LOADER_ID, null, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        iChooseU();
     }
 
     @Override
@@ -87,7 +97,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void doGitHubSearch() {
+    public void iChooseU() {
         String searchQuery = mSearchBoxET.getText().toString();
 
 //        if (!TextUtils.isEmpty(searchQuery)) {
@@ -131,6 +141,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSearchItemClick(PokeApiUtils.SearchResult searchResult) {
+        Log.d(TAG, "This is in side searchResult when clicked: " + searchResult);
         Intent detailedSearchResultIntent = new Intent(this, SearchResultDetailActivity.class);
         detailedSearchResultIntent.putExtra(PokeApiUtils.EXTRA_SEARCH_RESULT, searchResult);
         startActivity(detailedSearchResultIntent);
@@ -149,13 +160,47 @@ public class MainActivity extends AppCompatActivity
     public void onLoadFinished(Loader<String> loader, String data) {
         mLoadingProgressBar.setVisibility(View.INVISIBLE);
         Log.d(TAG, "got results from loader");
+        ArrayList<PokeApiUtils.SearchResult> searchResults = PokeApiUtils.parseSearchResultsJSON(data);
+        ArrayList<PokeApiUtils.SearchResult> sortedByName = new ArrayList<>();
+
+        ArrayList<String> alphabetSort = new ArrayList<>();
         if (data != null) {
 
             Log.d(TAG, "What got sent to parseSearchResult was: " + data);
-            ArrayList<PokeApiUtils.SearchResult> searchResults = PokeApiUtils.parseSearchResultsJSON(data);
-            mGitHubSearchAdapter.updateSearchResults(searchResults);
+
+
+            for (PokeApiUtils.SearchResult entry : searchResults){
+                alphabetSort.add(entry.fullName);
+            }
+            Collections.sort(alphabetSort);
+
+            for(int i = 0; i < alphabetSort.size(); i++){
+                for(int k = 0; k< alphabetSort.size(); k++){
+                    if (alphabetSort.get(i) == searchResults.get(k).fullName){
+                        //PokeApiUtils.SearchResult temp =sortedByName.get(i);
+                        sortedByName.add(searchResults.get(k));
+                    }
+                }
+            }
+
+            Log.d(TAG, "Is mah new list sorted?" + sortedByName.get(0).fullName);
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            Log.d(TAG, "made it");
+
+            if(sharedPreferences.getString(getString(R.string.pref_sort_key),getString(R.string.pref_sort_default)).equals("id"))
+            {
+                Log.d(TAG, "WTF?: " + sharedPreferences.getString(getString(R.string.pref_sort_key),getString(R.string.pref_sort_default)));
+                mGitHubSearchAdapter.updateSearchResults(searchResults);
+                Log.d(TAG, "WTF Par 2?: " + searchResults.get(0).fullName);
+            }else{
+
+                Log.d(TAG, "WTF preferences?: " + sharedPreferences.getString(getString(R.string.pref_sort_key),getString(R.string.pref_sort_default)));
+                mGitHubSearchAdapter.updateSearchResults(sortedByName);
+            }
             mLoadingErrorMessage.setVisibility(View.INVISIBLE);
             mSearchResultsRV.setVisibility(View.VISIBLE);
+
         } else {
             mSearchResultsRV.setVisibility(View.INVISIBLE);
             mLoadingErrorMessage.setVisibility(View.VISIBLE);
@@ -166,4 +211,5 @@ public class MainActivity extends AppCompatActivity
     public void onLoaderReset(Loader<String> loader) {
         // Nothing to do...
     }
+
 }

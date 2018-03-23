@@ -1,6 +1,8 @@
 package com.example.android.firstgenpokedex;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Network;
 import android.net.Uri;
@@ -23,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import android.net.Uri;
@@ -87,7 +91,6 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
             mSearchResult = (PokeApiUtils.SearchResult) intent.getSerializableExtra(PokeApiUtils.EXTRA_SEARCH_RESULT);
             mTVSearchResultName.setText(mSearchResult.fullName);
-
             mTVSearchResultType1.setText("Type 1");
             mTVSearchResultType2.setText("Type 2");
             mTVSearchResultAbil.setText("Ability");
