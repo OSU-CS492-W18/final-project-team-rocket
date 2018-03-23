@@ -1,9 +1,13 @@
 package com.example.android.firstgenpokedex;
 
 import android.content.Intent;
+<<<<<<< HEAD
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+=======
+import android.media.MediaPlayer;
+>>>>>>> e0273c7743174a6bed4ba116373683e7cddeee02
 import android.net.Network;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,6 +17,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.android.firstgenpokedex.utils.NetworkUtils;
@@ -66,15 +72,24 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result_detail);
 
-        mTVSearchResultName = (TextView)findViewById(R.id.tv_search_result_name);
-
-//        mTVSearchResultStars = (TextView)findViewById(R.id.tv_search_result_stars);
-//        mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
+        mTVSearchResultName = (TextView) findViewById(R.id.tv_search_result_name);
         mTVSearchResultType1 = (TextView) findViewById(R.id.tv_search_result_type1);
         mTVSearchResultType2 = (TextView) findViewById(R.id.tv_search_result_type2);
         mTVSearchResultAbil = (TextView) findViewById(R.id.tv_search_result_ability);
         mTVSearchResultHidAbil = (TextView) findViewById(R.id.tv_search_result_hidden_ability);
-        //mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
+        mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
+
+
+        final MediaPlayer battleCry = MediaPlayer.create(this, R.raw.p1);
+
+        ImageButton battleCryBtn = (ImageButton) this.findViewById(R.id.action_battle_cry);
+
+        battleCryBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                battleCry.start();
+            }
+        });
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
@@ -95,7 +110,6 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         Log.d("DETAIL", "querying search URL: " + newBaseURL);
 
         new PokeSearchTask().execute(newBaseURL);
-            //mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
     }
 
     @Override
@@ -107,10 +121,11 @@ public class SearchResultDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.action_view_repo:
+//            //case R.id.action_view_repo:
 //                //viewRepoOnWeb();
 //                return true;
-//            case R.id.action_share:
+//            //case R.id.action_share:
+
 //                //shareRepo();
 //                return true;
             default:
@@ -131,13 +146,49 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                 try {
                     JSONObject resultObj = new JSONObject(NetworkUtils.doHTTPGet(urls[0]));
                     pokemonInfo = new JSONObject(resultObj.toString());
-                    Log.d("DETAIL",resultObj.toString());
+                    Log.d("DETAIL", resultObj.toString());
 
                     JSONObject speciesObj = new JSONObject(NetworkUtils.doHTTPGet(resultObj.getJSONObject("species").getString("url")));
-                    Log.d("DETAIL_S",speciesObj.toString());
+                    Log.d("DETAIL_S", speciesObj.toString());
                     JSONObject evolutionObj = new JSONObject(NetworkUtils.doHTTPGet(speciesObj.getJSONObject("evolution_chain").getString("url")));
                     Log.d("DETAIL_E",evolutionObj.toString());
                     evolutionInfo = new JSONObject(evolutionObj.toString());
+
+                    typeStr = "";
+                    if (pokemonInfo != null) {
+                        try {
+                            //pokemonInfo = new JSONObject(s);
+                            JSONArray typesJSONArray = pokemonInfo.getJSONArray("types");
+                            for (int i = 0; i < typesJSONArray.length(); i++) {
+                                typeStr = typeStr + typesJSONArray.getJSONObject(i).getJSONObject("type").getString("name") + ",";
+                            }
+
+                            JSONArray abilitiesJSONArray = pokemonInfo.getJSONArray("abilities");
+                            for (int i = 0; i < abilitiesJSONArray.length(); i++) {
+                                if (i == 0) {
+                                    ability1 = abilitiesJSONArray.getJSONObject(0).getJSONObject("ability").getString("name");
+                                    ability1 = ability1.substring(0, 1).toUpperCase() + ability1.substring(1);
+                                    ability1Hidden = abilitiesJSONArray.getJSONObject(0).getBoolean("is_hidden");
+                                }
+                                if (i == 1) {
+                                    ability2 = abilitiesJSONArray.getJSONObject(1).getJSONObject("ability").getString("name");
+                                    ability2 = ability2.substring(0, 1).toUpperCase() + ability2.substring(1);
+                                    ability2Hidden = abilitiesJSONArray.getJSONObject(1).getBoolean("is_hidden");
+                                }
+                            }
+
+                            spriteURL = pokemonInfo.getJSONObject("sprites").getString("front_default");
+
+                            Log.d("DETAIL_MAIN TYPES", typeStr);
+                            Log.d("DETAIL_MAIN ABILS", ability1 + ":" + Boolean.toString(ability1Hidden) + " " + ability2 + ":" + Boolean.toString(ability2Hidden));
+                            Log.d("DETAIL_MAIN SPRITE", spriteURL);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.d("POKEMON_INFO", "IS NULL!");
+                    }
+
 
                     if(evolutionInfo != null) {
                         evolutionImageURLs = new ArrayList<String>();
@@ -169,6 +220,8 @@ public class SearchResultDetailActivity extends AppCompatActivity {
                             ie.printStackTrace();
                         }
 
+
+
                     }
 
                     return resultObj.toString();
@@ -185,6 +238,7 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             Log.d("POSTEXECUTE", s);
+<<<<<<< HEAD
             typeStr = "";
             if(pokemonInfo != null) {
                 try {
@@ -222,6 +276,8 @@ public class SearchResultDetailActivity extends AppCompatActivity {
             } else {
                 Log.d("POKEMON_INFO","IS NULL!");
             }
+=======
+>>>>>>> e0273c7743174a6bed4ba116373683e7cddeee02
         }
     }
 }

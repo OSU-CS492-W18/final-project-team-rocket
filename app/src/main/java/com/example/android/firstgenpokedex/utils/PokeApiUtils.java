@@ -27,7 +27,7 @@ public class PokeApiUtils {
     public static class SearchResult implements Serializable {
         public String fullName;
         public String pokemonURL;
-        public String ability1;
+        public int entryNum;
     }
 
     public static String buildGitHubSearchURL(String searchQuery, String sort, String language,
@@ -76,6 +76,7 @@ public class PokeApiUtils {
             for (int i = 0; i < searchResultsItems.length(); i++) {
                 SearchResult result = new SearchResult();
                 JSONObject resultItem = searchResultsItems.getJSONObject(i);
+                result.entryNum = resultItem.getInt("entry_number");
                 result.fullName = resultItem.getJSONObject("pokemon_species").getString("name");
                 result.pokemonURL = GITHUB_SEARCH_BASE_URL + "pokemon/" + result.fullName + "/";
                 searchResultsList.add(result);

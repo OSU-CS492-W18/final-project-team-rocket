@@ -22,6 +22,7 @@
         android:gravity="center"
         >
 
+
         <ImageView
 
             android:id="@+id/tv_search_result_avi"
