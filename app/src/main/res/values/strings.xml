@@ -9,6 +9,11 @@
     <string name="share_chooser_title">Choose an app to share this repo</string>
     <string name="share_text_prefix">Check out this GitHub repo I found</string>
 
+    <string name="search_result_type">Type</string>
+    <string name="search_result_ability">Ability: </string>
+    <string name="search_result_hidden_ability">Hidden Ability: </string>
+    <string name="search_result_padding">          </string>
+
     <!-- Strings for sort-by preference -->
     <string name="pref_sort_key" translatable="false">pref_sort</string>
     <string name="pref_sort_title">Sort by</string>
