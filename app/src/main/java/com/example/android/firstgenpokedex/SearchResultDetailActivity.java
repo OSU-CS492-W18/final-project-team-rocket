@@ -33,18 +33,25 @@ import android.widget.TextView;
 
 import com.example.android.firstgenpokedex.utils.PokeApiUtils;
 
+import org.w3c.dom.Text;
+
 public class SearchResultDetailActivity extends AppCompatActivity {
 
     private TextView mTVSearchResultName;
     private TextView mTVSearchResultStars;
+
     private TextView mTVSearchResultDescription;
     public JSONObject pokemonInfo, evolutionInfo;
 
     public String typeStr, spriteURL;
     public String ability1, ability2;
     public boolean ability1Hidden, ability2Hidden;
+
     private ImageView mTVSearchResultAvi;
-    private TextView mTVSearchResultType;
+    private TextView mTVSearchResultType1;
+    private TextView mTVSearchResultType2;
+    private TextView mTVSearchResultAbil;
+    private TextView mTVSearchResultHidAbil;
 
     private PokeApiUtils.SearchResult mSearchResult;
 
@@ -53,6 +60,14 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result_detail);
 
         mTVSearchResultName = (TextView)findViewById(R.id.tv_search_result_name);
+
+//        mTVSearchResultStars = (TextView)findViewById(R.id.tv_search_result_stars);
+//        mTVSearchResultAvi = (ImageView) findViewById(R.id.tv_search_result_avi);
+        mTVSearchResultType1 = (TextView) findViewById(R.id.tv_search_result_type1);
+        mTVSearchResultType2 = (TextView) findViewById(R.id.tv_search_result_type2);
+        mTVSearchResultAbil = (TextView) findViewById(R.id.tv_search_result_ability);
+        mTVSearchResultHidAbil = (TextView) findViewById(R.id.tv_search_result_hidden_ability);
+
         mTVSearchResultStars = (TextView)findViewById(R.id.tv_search_result_stars);
         mTVSearchResultDescription = (TextView)findViewById(R.id.tv_search_result_description);
 
@@ -62,7 +77,14 @@ public class SearchResultDetailActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra(PokeApiUtils.EXTRA_SEARCH_RESULT)) {
             mSearchResult = (PokeApiUtils.SearchResult) intent.getSerializableExtra(PokeApiUtils.EXTRA_SEARCH_RESULT);
             mTVSearchResultName.setText(mSearchResult.fullName);
-            mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
+
+            mTVSearchResultType1.setText("Type 1");
+            mTVSearchResultType2.setText("Type 2");
+            mTVSearchResultAbil.setText("Ability");
+            mTVSearchResultHidAbil.setText("Hidden Ability");
+            //mTVSearchResultStars.setText(String.valueOf(mSearchResult.stars));
+//            mTVSearchResultDescription.setText(mSearchResult.pokemonURL);
+
         }
 
         // new get stuff
