@@ -69,7 +69,8 @@ public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapte
         }
 
         public void bind(PokeApiUtils.SearchResult searchResult) {
-            mSearchResultTV.setText(searchResult.fullName);
+            String searchResultCapd = searchResult.fullName.substring(0,1).toUpperCase() + searchResult.fullName.substring(1);
+            mSearchResultTV.setText(searchResultCapd);
         }
     }
 }
