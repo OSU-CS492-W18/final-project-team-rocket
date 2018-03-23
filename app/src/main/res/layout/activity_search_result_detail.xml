@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="40sp"
-        android:padding="16dp"
+        android:padding="5dp"
         android:textColor="#000"/>
 
     <LinearLayout
@@ -24,29 +24,19 @@
 
 
         <ImageView
-
             android:id="@+id/tv_search_result_avi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_marginRight="20dp"
-            android:paddingRight="30dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/search_result_padding"/>
+            android:layout_marginLeft="-40dp"/>
 
         <ImageButton
             android:id="@+id/action_battle_cry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="30dp"
-            android:background="@color/colorAccent2"
-            android:src="@drawable/dex_detail_cry" />
+            android:background="@drawable/dex_detail_cry"
+            android:padding="50dp" />
 
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,8 +49,8 @@
             android:id="@+id/tv_search_result_type1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20dp"
             android:paddingHorizontal="30dp"
+            android:padding="10dp"
             android:textSize="18dp"/>
 
         <TextView
@@ -83,8 +73,8 @@
             android:text="@string/search_result_ability"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20dp"
             android:paddingHorizontal="30dp"
+            android:padding="10dp"
             android:textSize="20dp"
             android:textColor="#000"/>
 
@@ -107,8 +97,8 @@
             android:text="@string/search_result_hidden_ability"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20dp"
             android:paddingHorizontal="30dp"
+            android:padding="10dp"
             android:textSize="20dp"
             android:textColor="#000"/>
 
@@ -117,6 +107,45 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/tv_evo_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/tv_arrow_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_evo_arrow"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/tv_evo_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/tv_arrow_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_evo_arrow"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/tv_evo_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
